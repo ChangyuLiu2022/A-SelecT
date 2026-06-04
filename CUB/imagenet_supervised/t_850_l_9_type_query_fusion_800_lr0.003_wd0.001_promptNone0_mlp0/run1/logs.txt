@@ -1,0 +1,423 @@
+[06/04 17:59:02][INFO] visual_prompt:   95: Rank of current process: 0. World size: 1
+[06/04 17:59:02][INFO] visual_prompt:   97: Environment info:
+-------------------  ----------------------------------------------------
+Python               3.8.20 (default, Oct  3 2024, 15:24:27) [GCC 11.2.0]
+ENV_MODULE           <not set>
+PyTorch              2.2.1
+PyTorch Debug Build  False
+CUDA available       True
+CUDA ID              0
+GPU 0                NVIDIA RTX 6000 Ada Generation
+Pillow               10.4.0
+cv2                  4.10.0
+-------------------  ----------------------------------------------------
+PyTorch built with:
+  - GCC 9.3
+  - C++ Version: 201703
+  - Intel(R) oneAPI Math Kernel Library Version 2023.1-Product Build 20230303 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v3.3.2 (Git Hash 2dc95a2ad0841e29db8b22fbccaf3e5da7992b01)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - LAPACK is enabled (usually provided by MKL)
+  - NNPACK is enabled
+  - CPU capability usage: AVX512
+  - CUDA Runtime 11.8
+  - NVCC architecture flags: -gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_61,code=sm_61;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_37,code=sm_37;-gencode;arch=compute_90,code=sm_90;-gencode;arch=compute_37,code=compute_37
+  - CuDNN 8.7
+  - Magma 2.6.1
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=11.8, CUDNN_VERSION=8.7.0, CXX_COMPILER=/opt/rh/devtoolset-9/root/usr/bin/c++, CXX_FLAGS= -D_GLIBCXX_USE_CXX11_ABI=0 -fabi-version=11 -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOROCTRACER -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor -Werror=bool-operation -Wnarrowing -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-function -Wno-unused-result -Wno-strict-overflow -Wno-strict-aliasing -Wno-stringop-overflow -Wsuggest-override -Wno-psabi -Wno-error=pedantic -Wno-error=old-style-cast -Wno-missing-braces -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=2.2.1, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF, USE_ROCM_KERNEL_ASSERT=OFF, 
+
+[06/04 17:59:02][INFO] visual_prompt:   99: Command line arguments: Namespace(config_file='configs/configs_dit/cub.yaml', opts=['DATA.BATCH_SIZE', '8', 'MODEL.PROMPT.NUM_TOKENS', '0', 'MODEL.PROMPT.DROPOUT', '0.0', 'MODEL.PROMPT_HEAD_PATH', '', 'MODEL.MLP_NUM', '0', 'SOLVER.TOTAL_EPOCH', '100', 'MODEL.T_LIST', '[850]', 'MODEL.FEATURES_LAYER_LIST', '[9]', 'MODEL.FEATURES_TYPE_LIST', "['query']", 'DATA.DATAPATH', '/storage/data/changyu/CUB_200_2011', 'DATA.CROPSIZE', '512', 'MODEL.FUSION_PRE_LAYER', 'True', 'MODEL.FUSION_PRE_LAYER_TYPE', 'attn_dim', 'MODEL.FUSION_ARC', 'Use_CLS_Token:True:800,Insert_CLS_Token,Attention:800:8:4:2,Extract_CLS_Token', 'DBG', 'True', 'MODEL.FUSION_TYPE', 'attention', 'SEED', '0', 'MODEL.TYPE', 'prompted-dit'], train_type='')
+[06/04 17:59:02][INFO] visual_prompt:  101: Contents of args.config_file=configs/configs_dit/cub.yaml:
+_BASE_: "../base-prompt-dit.yaml"
+RUN_N_TIMES: 100
+DATA:
+  NAME: "CUB"
+  DATAPATH: "CUB_200_2011"  #TODO: need to specify here
+  NUMBER_CLASSES: 200
+  MULTILABEL: False
+  FEATURE: "imagenet_supervised"  # need to tune
+  CROPSIZE: 512
+MODEL:
+  TYPE: "prompted-dit"
+SOLVER:
+  BASE_LR: 0.003
+  WEIGHT_DECAY: 0.001
+  WARMUP_EPOCH: 0
+  ACC_THRESHOLD: 0.7
+
+[06/04 17:59:02][INFO] visual_prompt:  108: Training with config:
+[06/04 17:59:02][INFO] visual_prompt:  109: {'CUDNN_BENCHMARK': False,
+ 'DATA': {'BATCH_SIZE': 8,
+          'CLASS_WEIGHTS_TYPE': 'none',
+          'CROPSIZE': 512,
+          'DATAPATH': '/storage/data/changyu/CUB_200_2011',
+          'FEATURE': 'imagenet_supervised',
+          'MULTILABEL': False,
+          'NAME': 'CUB',
+          'NO_TEST': False,
+          'NUMBER_CLASSES': 200,
+          'NUM_WORKERS': 4,
+          'PERCENTAGE': 1.0,
+          'PIN_MEMORY': True},
+ 'DBG': True,
+ 'DIST_BACKEND': 'nccl',
+ 'DIST_INIT_FILE': '',
+ 'DIST_INIT_PATH': 'env://',
+ 'IMP': CfgNode({'CUTOFF': 0.15, 'LOW_FREQ_1D': True}),
+ 'MODEL': {'ADAPTER': CfgNode({'REDUCATION_FACTOR': 8, 'STYLE': 'Pfeiffer'}),
+           'ATTENTION_LAYER_LIST': [],
+           'CKPT': None,
+           'DEPTH': 23,
+           'FEATURES_LAYER_LIST': [9],
+           'FEATURES_TYPE_LIST': ['query'],
+           'FUSION_ARC': 'Use_CLS_Token:True:800,Insert_CLS_Token,Attention:800:8:4:2,Extract_CLS_Token',
+           'FUSION_LINEAR_OUT_DIM': 256,
+           'FUSION_PRE_LAYER': True,
+           'FUSION_PRE_LAYER_TYPE': 'attn_dim',
+           'FUSION_TYPE': 'attention',
+           'LINEAR': CfgNode({'MLP_SIZES': [], 'DROPOUT': 0.1}),
+           'MLP_NUM': 0,
+           'MODEL_ROOT': '',
+           'PROMPT': {'CLSEMB_FOLDER': '',
+                      'CLSEMB_PATH': '',
+                      'DEEP_SHARED': False,
+                      'DROPOUT': 0.0,
+                      'FORWARD_DEEP_NOEXPAND': False,
+                      'INITIATION': 'random',
+                      'LOCATION': 'prepend',
+                      'NUM_DEEP_LAYERS': None,
+                      'NUM_TOKENS': 0,
+                      'PROJECT': -1,
+                      'REVERSE_DEEP': False,
+                      'SAVE_FOR_EACH_EPOCH': False,
+                      'TYPE': None,
+                      'VIT_POOL_TYPE': 'original'},
+           'PROMPT_HEAD_PATH': '',
+           'SAVE_CKPT': False,
+           'SAVE_FEATURES': False,
+           'TRANSFER_TYPE': 'prompt',
+           'TYPE': 'prompted-dit',
+           'T_LIST': [850],
+           'UPSAMPLE': False,
+           'WEIGHT_PATH': ''},
+ 'NUM_GPUS': 1,
+ 'NUM_SHARDS': 1,
+ 'OUTPUT_DIR': 'CUB/imagenet_supervised/t_850_l_9_type_query_fusion_800_lr0.003_wd0.001_promptNone0_mlp0/run1',
+ 'RUN_N_TIMES': 100,
+ 'SEED': 0,
+ 'SOLVER': {'ACC_THRESHOLD': 0.7,
+            'BASE_LR': 0.003,
+            'BIAS_MULTIPLIER': 1.0,
+            'DBG_TRAINABLE': False,
+            'LOG_EVERY_N': 100,
+            'LOSS': 'softmax',
+            'LOSS_ALPHA': 0.01,
+            'MOMENTUM': 0.9,
+            'OPTIMIZER': 'adamw',
+            'PATIENCE': 300,
+            'SCHEDULER': 'cosine',
+            'TOTAL_EPOCH': 100,
+            'WARMUP_EPOCH': 0,
+            'WEIGHT_DECAY': 0.001,
+            'WEIGHT_DECAY_BIAS': 0}}
+[06/04 17:59:02][INFO] visual_prompt:   87: Loading training data (final training data for vtab)...
+[06/04 17:59:02][INFO] visual_prompt:   26: Constructing CUB dataset train...
+[06/04 17:59:02][INFO] visual_prompt:   70: Number of images: 5394
+[06/04 17:59:02][INFO] visual_prompt:   71: Number of classes: 200
+[06/04 17:59:02][INFO] visual_prompt:   94: Loading validation data...
+[06/04 17:59:02][INFO] visual_prompt:   26: Constructing CUB dataset val...
+[06/04 17:59:02][INFO] visual_prompt:   70: Number of images: 600
+[06/04 17:59:02][INFO] visual_prompt:   71: Number of classes: 200
+[06/04 17:59:02][INFO] visual_prompt:   97: Loading test data...
+[06/04 17:59:02][INFO] visual_prompt:   26: Constructing CUB dataset test...
+[06/04 17:59:02][INFO] visual_prompt:   70: Number of images: 5794
+[06/04 17:59:02][INFO] visual_prompt:   71: Number of classes: 200
+[06/04 17:59:02][INFO] visual_prompt:  156: Constructing models...
+[06/04 17:59:06][INFO] visual_prompt:   51: Classification Model:
+PromptedDiT(
+  (encoder): SD3Transformer2DModel(
+    (pos_embed): PatchEmbed(
+      (proj): Conv2d(16, 1536, kernel_size=(2, 2), stride=(2, 2))
+    )
+    (time_text_embed): CombinedTimestepTextProjEmbeddings(
+      (time_proj): Timesteps()
+      (timestep_embedder): TimestepEmbedding(
+        (linear_1): Linear(in_features=256, out_features=1536, bias=True)
+        (act): SiLU()
+        (linear_2): Linear(in_features=1536, out_features=1536, bias=True)
+      )
+      (text_embedder): PixArtAlphaTextProjection(
+        (linear_1): Linear(in_features=2048, out_features=1536, bias=True)
+        (act_1): SiLU()
+        (linear_2): Linear(in_features=1536, out_features=1536, bias=True)
+      )
+    )
+    (context_embedder): Linear(in_features=4096, out_features=1536, bias=True)
+    (transformer_blocks): ModuleList(
+      (0-22): 23 x JointTransformerBlock(
+        (norm1): AdaLayerNormZero(
+          (silu): SiLU()
+          (linear): Linear(in_features=1536, out_features=9216, bias=True)
+          (norm): LayerNorm((1536,), eps=1e-06, elementwise_affine=False)
+        )
+        (norm1_context): AdaLayerNormZero(
+          (silu): SiLU()
+          (linear): Linear(in_features=1536, out_features=9216, bias=True)
+          (norm): LayerNorm((1536,), eps=1e-06, elementwise_affine=False)
+        )
+        (attn): Attention(
+          (to_q): Linear(in_features=1536, out_features=1536, bias=True)
+          (to_k): Linear(in_features=1536, out_features=1536, bias=True)
+          (to_v): Linear(in_features=1536, out_features=1536, bias=True)
+          (add_k_proj): Linear(in_features=1536, out_features=1536, bias=True)
+          (add_v_proj): Linear(in_features=1536, out_features=1536, bias=True)
+          (add_q_proj): Linear(in_features=1536, out_features=1536, bias=True)
+          (to_out): ModuleList(
+            (0): Linear(in_features=1536, out_features=1536, bias=True)
+            (1): Dropout(p=0.0, inplace=False)
+          )
+          (to_add_out): Linear(in_features=1536, out_features=1536, bias=True)
+        )
+        (norm2): LayerNorm((1536,), eps=1e-06, elementwise_affine=False)
+        (ff): FeedForward(
+          (net): ModuleList(
+            (0): GELU(
+              (proj): Linear(in_features=1536, out_features=6144, bias=True)
+            )
+            (1): Dropout(p=0.0, inplace=False)
+            (2): Linear(in_features=6144, out_features=1536, bias=True)
+          )
+        )
+        (norm2_context): LayerNorm((1536,), eps=1e-06, elementwise_affine=False)
+        (ff_context): FeedForward(
+          (net): ModuleList(
+            (0): GELU(
+              (proj): Linear(in_features=1536, out_features=6144, bias=True)
+            )
+            (1): Dropout(p=0.0, inplace=False)
+            (2): Linear(in_features=6144, out_features=1536, bias=True)
+          )
+        )
+      )
+      (23): JointTransformerBlock(
+        (norm1): AdaLayerNormZero(
+          (silu): SiLU()
+          (linear): Linear(in_features=1536, out_features=9216, bias=True)
+          (norm): LayerNorm((1536,), eps=1e-06, elementwise_affine=False)
+        )
+        (norm1_context): AdaLayerNormContinuous(
+          (silu): SiLU()
+          (linear): Linear(in_features=1536, out_features=3072, bias=True)
+          (norm): LayerNorm((1536,), eps=1e-06, elementwise_affine=False)
+        )
+        (attn): Attention(
+          (to_q): Linear(in_features=1536, out_features=1536, bias=True)
+          (to_k): Linear(in_features=1536, out_features=1536, bias=True)
+          (to_v): Linear(in_features=1536, out_features=1536, bias=True)
+          (add_k_proj): Linear(in_features=1536, out_features=1536, bias=True)
+          (add_v_proj): Linear(in_features=1536, out_features=1536, bias=True)
+          (add_q_proj): Linear(in_features=1536, out_features=1536, bias=True)
+          (to_out): ModuleList(
+            (0): Linear(in_features=1536, out_features=1536, bias=True)
+            (1): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (norm2): LayerNorm((1536,), eps=1e-06, elementwise_affine=False)
+        (ff): FeedForward(
+          (net): ModuleList(
+            (0): GELU(
+              (proj): Linear(in_features=1536, out_features=6144, bias=True)
+            )
+            (1): Dropout(p=0.0, inplace=False)
+            (2): Linear(in_features=6144, out_features=1536, bias=True)
+          )
+        )
+      )
+    )
+    (norm_out): AdaLayerNormContinuous(
+      (silu): SiLU()
+      (linear): Linear(in_features=1536, out_features=3072, bias=True)
+      (norm): LayerNorm((1536,), eps=1e-06, elementwise_affine=False)
+    )
+    (proj_out): Linear(in_features=1536, out_features=64, bias=True)
+  )
+  (prompt_dropout): Dropout(p=0.0, inplace=False)
+  (prompt_proj): Identity()
+  (merge_module): AttentionFusion(
+    (block_attention_list): ModuleList(
+      (0): AttentionHead(
+        (layers): Sequential(
+          (0): LambdaLayer()
+          (1): Block(
+            (norm1): LayerNorm((800,), eps=1e-05, elementwise_affine=True)
+            (attn): Attention(
+              (qkv): Linear(in_features=800, out_features=2400, bias=False)
+              (q_norm): Identity()
+              (k_norm): Identity()
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=800, out_features=800, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+            )
+            (drop_path): Identity()
+            (norm2): LayerNorm((800,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=800, out_features=3200, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=3200, out_features=800, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (2): Block(
+            (norm1): LayerNorm((800,), eps=1e-05, elementwise_affine=True)
+            (attn): Attention(
+              (qkv): Linear(in_features=800, out_features=2400, bias=False)
+              (q_norm): Identity()
+              (k_norm): Identity()
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=800, out_features=800, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+            )
+            (drop_path): Identity()
+            (norm2): LayerNorm((800,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=800, out_features=3200, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=3200, out_features=800, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (3): LambdaLayer()
+        )
+      )
+    )
+    (pre_layer_list): ModuleList(
+      (0): Linear(in_features=1536, out_features=800, bias=True)
+    )
+  )
+  (head): MLP(
+    (projection): Sequential()
+    (last_layer): Linear(in_features=800, out_features=200, bias=True)
+  )
+)
+[06/04 17:59:06][INFO] visual_prompt:   55: Total Parameters: 2045094600	 Gradient Parameters: 16766600
+[06/04 17:59:06][INFO] visual_prompt:   57: tuned percent:0.820
+[06/04 17:59:06][INFO] visual_prompt:   43: Device used for model: 0
+[06/04 17:59:06][INFO] visual_prompt:  161: Setting up Evalutator...
+[06/04 17:59:06][INFO] visual_prompt:  163: Setting up Trainer...
+[06/04 17:59:06][INFO] visual_prompt:   47: 	Setting up the optimizer...
+[06/04 17:59:06][INFO] visual_prompt:  250: Training 1 / 100 epoch, with learning rate 0.003
+[06/04 17:59:06][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:06][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:06][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:06][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:06][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:06][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:07][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:07][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:07][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:07][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:07][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:07][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:07][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:07][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:07][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:07][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:07][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:07][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:08][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:08][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:08][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:08][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:08][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:08][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:08][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:08][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:08][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:08][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:08][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:08][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:08][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:08][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:08][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:09][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:09][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:09][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:09][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:09][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:09][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:09][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:09][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:09][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:09][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:09][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:09][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:10][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:10][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:10][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:10][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:10][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:10][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:10][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:10][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:10][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:10][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:10][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:10][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:11][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:11][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:11][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:11][INFO] visual_prompt:  330: Epoch 1 / 100: avg data time: 1.15e-02, avg batch time: 0.2547, average train loss: 193.4222
+[06/04 17:59:11][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:11][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:11][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:11][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:11][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:11][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:11][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:11][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:12][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:12][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:12][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:12][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:12][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:12][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:12][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:12][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:12][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:12][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:12][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:12][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:12][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:13][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:13][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:13][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:13][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:13][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:13][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:13][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:13][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:13][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:13][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:13][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:13][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:13][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:13][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:13][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:14][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:14][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:14][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:14][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:14][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:14][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:14][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:14][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:14][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:14][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:14][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:14][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:14][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:14][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:14][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])
+[06/04 17:59:15][INFO] visual_prompt:   88: shape of inputs: torch.Size([8, 16, 64, 64])
+[06/04 17:59:15][INFO] visual_prompt:   89: shape of targets: torch.Size([8])
+[06/04 17:59:15][INFO] visual_prompt:   95: shape of model output: torch.Size([8, 200]), targets: torch.Size([8])

@@ -1,0 +1,16 @@
+_BASE_: "../base-prompt-dit.yaml"
+RUN_N_TIMES: 100
+DATA:
+  NAME: "Aircraft"
+  DATAPATH: "fgvc-aircraft-2013b"  #TODO: need to specify here
+  NUMBER_CLASSES: 100
+  MULTILABEL: False
+  FEATURE: "imagenet_supervised"  # need to tune
+  CROPSIZE: 512
+MODEL:
+  TYPE: "prompted-dit"
+SOLVER:
+  BASE_LR: 0.003
+  WEIGHT_DECAY: 0.001
+  WARMUP_EPOCH: 0
+  ACC_THRESHOLD: 0.6
